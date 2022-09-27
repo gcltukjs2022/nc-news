@@ -48,6 +48,24 @@ nav {
   justify-content: center;
 }
 
+.card--comments {
+  padding: 0%;
+  margin-bottom: 20px;
+  border: 10px solid black;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.card--topics {
+  padding: 5%;
+  margin-bottom: 20px;
+  border: 10px solid black;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
 ul {
   list-style-type: none;
 }
