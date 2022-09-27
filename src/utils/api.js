@@ -21,3 +21,15 @@ export const getTopicBySlug = (topic) => {
     return res.data;
   });
 };
+
+export const getArticlebyId = (article_id) => {
+  return newsApi.get(`/articles/${article_id}`).then((res) => {
+    return res.data;
+  });
+};
+
+export const getUserByUsername = (username) => {
+  return newsApi.get(`/users/${username}`).then((res) => {
+    return res.data;
+  });
+};
