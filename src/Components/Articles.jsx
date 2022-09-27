@@ -6,10 +6,9 @@ import Spinner from "react-bootstrap/Spinner";
 
 export default function Articles() {
   const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
     getArticles().then(({ articles }) => {
       setArticles(articles);
       setIsLoading(false);
