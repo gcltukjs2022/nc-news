@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { getArticles } from "../utils/api";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import Spinner from "react-bootstrap/Spinner";
+import { Button, Spinner } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { getTopicBySlug } from "../utils/api";
 
-export default function Articles() {
-  const [articles, setArticles] = useState([]);
+export default function Topic() {
+  const params = useParams();
+  const [topicArticles, setTopicArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getArticles().then(({ articles }) => {
-      setArticles(articles);
+    getTopicBySlug(params.topic).then(({ articles }) => {
+      setTopicArticles(articles);
       setIsLoading(false);
     });
   }, []);
@@ -24,8 +24,8 @@ export default function Articles() {
 
   return (
     <div className="cards">
-      <h2>All Articles</h2>
-      {articles.map((article) => {
+      <h2>{params.topic}</h2>
+      {topicArticles.map((article) => {
         return (
           <div key={article.article_id} className="card">
             <div className="text">

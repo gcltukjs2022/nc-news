@@ -25,7 +25,7 @@ export default function NavBar() {
               <a className="nav-link active" href="/articles">
                 Articles
               </a>
-              <a className="nav-link active" href="/">
+              <a className="nav-link active" href="/topics">
                 Topics
               </a>
               <a className="nav-link active" href="/">
