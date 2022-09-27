@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getArticlebyId, getUserByUsername, updateArticle } from "../utils/api";
+import Comments from "./Comments";
 
 export default function SingleArticle() {
   const params = useParams();
   const [singleArticle, setSingleArticle] = useState({});
   const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getArticlebyId(params.id).then(({ article }) => {
       setSingleArticle(article);
       getUserByUsername(article.author).then(({ user }) => {
         setUser(user);
+        setIsLoading(false);
       });
     });
   }, [params.id]);
@@ -48,6 +52,13 @@ export default function SingleArticle() {
       });
   };
 
+  if (isLoading)
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
+
   return (
     <div className="card--article">
       <h2>{singleArticle.title}</h2>
@@ -71,6 +82,8 @@ export default function SingleArticle() {
         <span>👎</span>
       </button>
       <hr />
+      <p>Comments:</p>
+      <Comments article_id={singleArticle.article_id} />
     </div>
   );
 }
