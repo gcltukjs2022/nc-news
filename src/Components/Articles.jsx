@@ -30,6 +30,7 @@ export default function Articles() {
           <div key={article.article_id} className="card">
             <div className="text">
               <h5>{article.title}</h5>
+              <hr />
               <p>Topic:{article.topic}</p>
               <p>Posted by {article.author}</p>
               <p>{article.created_at}</p>
