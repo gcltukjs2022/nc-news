@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getArticlebyId, getUserByUsername } from "../utils/api";
+import { getArticlebyId, getUserByUsername, updateArticle } from "../utils/api";
 
 export default function SingleArticle() {
   const params = useParams();
@@ -16,6 +16,38 @@ export default function SingleArticle() {
     });
   }, [params.id]);
 
+  const upVotesArticle = () => {
+    setSingleArticle((currArticle) => {
+      return { ...currArticle, votes: currArticle.votes + 1 };
+    });
+    const reqBody = {
+      inc_votes: 1,
+    };
+    updateArticle(singleArticle.article_id, reqBody)
+      .then(() => {})
+      .catch((err) => {
+        setSingleArticle((currArticle) => {
+          return { ...currArticle, votes: currArticle.votes - 1 };
+        });
+      });
+  };
+
+  const downVotesArticle = () => {
+    setSingleArticle((currArticle) => {
+      return { ...currArticle, votes: currArticle.votes - 1 };
+    });
+    const reqBody = {
+      inc_votes: -1,
+    };
+    updateArticle(singleArticle.article_id, reqBody)
+      .then(() => {})
+      .catch((err) => {
+        setSingleArticle((currArticle) => {
+          return { ...currArticle, votes: currArticle.votes + 1 };
+        });
+      });
+  };
+
   return (
     <div className="card--article">
       <h2>{singleArticle.title}</h2>
@@ -24,6 +56,21 @@ export default function SingleArticle() {
       <img className="user--avatar" src={user.avatar_url} alt={user.username} />
       <p>{singleArticle.body}</p>
       <p>Votes:{singleArticle.votes}</p>
+      <button
+        onClick={() => {
+          upVotesArticle();
+        }}
+      >
+        <span>👍</span>
+      </button>
+      <button
+        onClick={() => {
+          downVotesArticle();
+        }}
+      >
+        <span>👎</span>
+      </button>
+      <hr />
     </div>
   );
 }
