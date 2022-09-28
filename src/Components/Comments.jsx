@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Card, ListGroup, Spinner } from "react-bootstrap";
 import { getComments } from "../utils/api";
+import CommentAdder from "./CommentAdder";
+import Users from "./Users";
 
 export default function Comments({ article_id }) {
   const [comments, setComments] = useState([]);
@@ -11,7 +13,7 @@ export default function Comments({ article_id }) {
       setComments(comments);
       setIsLoading(false);
     });
-  }, [article_id]);
+  }, [comments]);
 
   if (isLoading)
     return (
@@ -21,22 +23,26 @@ export default function Comments({ article_id }) {
     );
 
   return (
-    <div>
-      {comments.map((comment) => {
-        return (
-          <Card key={comment.comment_id} className="card--comments">
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                {comment.author}
-                <br />
-                {comment.created_at}
-              </ListGroup.Item>
-              <ListGroup.Item>votes:{comment.votes}</ListGroup.Item>
-              <ListGroup.Item>{comment.body}</ListGroup.Item>
-            </ListGroup>
-          </Card>
-        );
-      })}
-    </div>
+    <>
+      <CommentAdder article_id={article_id} setComments={setComments} />
+      <div>
+        {comments.map((comment) => {
+          return (
+            <Card key={comment.comment_id} className="card--comments">
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <Users author={comment.author} />
+                  {comment.author}
+                  <br />
+                  {comment.created_at}
+                </ListGroup.Item>
+                <ListGroup.Item>votes:{comment.votes}</ListGroup.Item>
+                <ListGroup.Item>{comment.body}</ListGroup.Item>
+              </ListGroup>
+            </Card>
+          );
+        })}
+      </div>
+    </>
   );
 }

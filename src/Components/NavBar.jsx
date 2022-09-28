@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import { UserContext } from "./User";
 
 export default function NavBar() {
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+
   return (
     <nav>
       <Navbar className="bg-light">
@@ -36,7 +40,8 @@ export default function NavBar() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              Signed in as: <a href="#login">Temp</a>
+              Signed in as: {loggedInUser.username}{" "}
+              <img src={loggedInUser.avatar_url} alt="user-avatar" width={20} />
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
