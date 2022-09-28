@@ -45,3 +45,11 @@ export const getComments = (article_id) => {
     return res.data;
   });
 };
+
+export const addComment = (article_id, reqBody) => {
+  return newsApi
+    .post(`/articles/${article_id}/comments`, reqBody)
+    .then((res) => {
+      return res.data;
+    });
+};

@@ -63,8 +63,13 @@ export default function SingleArticle() {
     <div className="card--article">
       <h2>{singleArticle.title}</h2>
       <p>{singleArticle.created_at}</p>
+      <img
+        className="user--avatar"
+        src={user.avatar_url}
+        alt={user.username}
+        width={40}
+      />
       <p>Posted by {singleArticle.author}</p>
-      <img className="user--avatar" src={user.avatar_url} alt={user.username} />
       <p>{singleArticle.body}</p>
       <p>Votes:{singleArticle.votes}</p>
       <button
