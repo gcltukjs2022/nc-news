@@ -12,7 +12,11 @@ export const getArticles = (queries) => {
   }
   return newsApi
     .get("/articles", {
-      params: { sort_by: queries.query, order: queries.order },
+      params: {
+        topic: queries.topic,
+        sort_by: queries.query,
+        order: queries.order,
+      },
     })
     .then((res) => {
       return res.data;
@@ -21,12 +25,6 @@ export const getArticles = (queries) => {
 
 export const getTopics = () => {
   return newsApi.get("/topics").then((res) => {
-    return res.data;
-  });
-};
-
-export const getTopicBySlug = (topic) => {
-  return newsApi.get(`/articles?topic=${topic}`).then((res) => {
     return res.data;
   });
 };
