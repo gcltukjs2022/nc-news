@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup, Spinner } from "react-bootstrap";
-import { getComments } from "../utils/api";
+import { getComments, removeComment } from "../utils/api";
 import CommentAdder from "./CommentAdder";
+import { UserContext } from "./User";
 import Users from "./Users";
 
 export default function Comments({ article_id }) {
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +16,24 @@ export default function Comments({ article_id }) {
       setIsLoading(false);
     });
   }, [comments]);
+
+  const handleDeleteComment = (event, comment_id) => {
+    event.preventDefault();
+    alert("You have deleted a comment!");
+
+    const newCommentsList = comments.filter((comment) => {
+      return comment.comment_id !== comment_id;
+    });
+
+    setComments(newCommentsList);
+
+    removeComment(comment_id)
+      .then(() => {})
+      .catch((err) => {
+        alert("Error: Please try to delete again.");
+        setComments(comments);
+      });
+  };
 
   if (isLoading)
     return (
@@ -38,6 +58,21 @@ export default function Comments({ article_id }) {
                 </ListGroup.Item>
                 <ListGroup.Item>votes:{comment.votes}</ListGroup.Item>
                 <ListGroup.Item>{comment.body}</ListGroup.Item>
+
+                {comment.author === loggedInUser.username ? (
+                  <ListGroup.Item>
+                    <button
+                      className="button--delete comment"
+                      onClick={(event) =>
+                        handleDeleteComment(event, comment.comment_id)
+                      }
+                    >
+                      Delete
+                    </button>
+                  </ListGroup.Item>
+                ) : (
+                  ""
+                )}
               </ListGroup>
             </Card>
           );

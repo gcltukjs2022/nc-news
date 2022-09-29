@@ -60,3 +60,7 @@ export const addComment = (article_id, reqBody) => {
       return res.data;
     });
 };
+
+export const removeComment = (comment_id) => {
+  return newsApi.delete(`/comments/${comment_id}`).then(() => {});
+};
