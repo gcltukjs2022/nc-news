@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getArticlebyId, getUserByUsername, updateArticle } from "../utils/api";
 import Comments from "./Comments";
 
@@ -9,15 +9,18 @@ export default function SingleArticle() {
   const [singleArticle, setSingleArticle] = useState({});
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getArticlebyId(params.id).then(({ article }) => {
-      setSingleArticle(article);
-      getUserByUsername(article.author).then(({ user }) => {
-        setUser(user);
-        setIsLoading(false);
-      });
-    });
+    getArticlebyId(params.id)
+      .then(({ article }) => {
+        setSingleArticle(article);
+        getUserByUsername(article.author).then(({ user }) => {
+          setUser(user);
+          setIsLoading(false);
+        });
+      })
+      .catch((err) => navigate(`/articles/${params.id}/article_not_found`));
   }, [params.id]);
 
   const upVotesArticle = () => {

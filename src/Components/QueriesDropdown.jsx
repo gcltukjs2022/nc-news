@@ -28,6 +28,7 @@ export default function QueriesDropdown({
           delete queries[key];
         }
       }
+      delete queries.topic;
       setSearchParams({ ...queries });
     }
   }, [queries]);
@@ -49,7 +50,7 @@ export default function QueriesDropdown({
             Date(Default)
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={(event) => {
+            onClick={() => {
               setQueries((currQueries) => {
                 return { ...currQueries, query: "comment_count" };
               });

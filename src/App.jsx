@@ -9,6 +9,9 @@ import Home from "./Components/Home";
 import Topics from "./Components/Topics";
 import Topic from "./Components/Topic";
 import SingleArticle from "./Components/SingleArticle";
+import NonExistentPath from "./Components/NonExistentArticle";
+import NonExistentArticle from "./Components/NonExistentArticle";
+import NonExistentTopic from "./Components/NonExistentTopic";
 
 function App() {
   return (
@@ -22,6 +25,15 @@ function App() {
           <Route path="/topics" element={<Topics />}></Route>
           <Route path="/topics/:topic" element={<Topic />}></Route>
           <Route path="/articles/:id" element={<SingleArticle />}></Route>
+          <Route
+            path="/articles/:nonexistentid/article_not_found"
+            element={<NonExistentArticle />}
+          ></Route>
+          <Route
+            path="/topics/:nonexistenttopic/topic_not_found"
+            element={<NonExistentTopic />}
+          ></Route>
+          <Route path="*" element={<NonExistentPath />}></Route>
         </Routes>
       </main>
     </div>

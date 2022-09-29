@@ -8,7 +8,7 @@ import QueriesDropdown from "./QueriesDropdown";
 export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [queries, setQueries] = useState({ query: "", order: "" });
+  const [queries, setQueries] = useState({ topic: "", query: "", order: "" });
   const [searchParams, setSearchParams] = useSearchParams({});
 
   useEffect(() => {
