@@ -9,30 +9,33 @@ export default function Comments({ article_id }) {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   useEffect(() => {
     getComments(article_id).then(({ comments }) => {
       setComments(comments);
       setIsLoading(false);
     });
-  }, [comments]);
+  }, [comments, article_id]);
 
   const handleDeleteComment = (event, comment_id) => {
     event.preventDefault();
-    alert("You have deleted a comment!");
+    setIsAlertVisible(true);
+    setTimeout(() => {
+      setIsAlertVisible(false);
+    }, 3000);
 
-    const newCommentsList = comments.filter((comment) => {
-      return comment.comment_id !== comment_id;
-    });
+    setTimeout(() => {
+      const newCommentsList = comments.filter((comment) => {
+        return comment.comment_id !== comment_id;
+      });
+      setComments(newCommentsList);
 
-    setComments(newCommentsList);
-
-    removeComment(comment_id)
-      .then(() => {})
-      .catch((err) => {
+      removeComment(comment_id).catch((err) => {
         alert("Error: Please try to delete again.");
         setComments(comments);
       });
+    }, 3000);
   };
 
   if (isLoading)
@@ -61,6 +64,13 @@ export default function Comments({ article_id }) {
 
                 {comment.author === loggedInUser.username ? (
                   <ListGroup.Item>
+                    {isAlertVisible && (
+                      <div className="alert-container">
+                        <div className="alert-inner">
+                          You have deleted this comment
+                        </div>
+                      </div>
+                    )}
                     <button
                       className="button--delete comment"
                       onClick={(event) =>
