@@ -22,15 +22,17 @@ export default function Topic() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getArticles(params).catch((err) =>
-      navigate(`/topics/${params.topic}/topic_not_found`)
-    );
+    getArticles(params)
+      .then(({ articles }) => setTopicArticles(articles))
+      .catch((err) => navigate(`/topics/${params.topic}/topic_not_found`));
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
     getArticles(queries).then(({ articles }) => {
-      setTopicArticles(articles);
+      setTopicArticles(
+        articles.filter((article) => article.topic === params.topic)
+      );
       setIsLoading(false);
     });
   }, [queries]);
