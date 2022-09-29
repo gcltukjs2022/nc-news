@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { getArticles } from "../utils/api";
 import QueriesDropdown from "./QueriesDropdown";
 
@@ -14,6 +19,13 @@ export default function Topic() {
     order: "",
   });
   const [searchParams, setSearchParams] = useSearchParams({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getArticles(params).catch((err) =>
+      navigate(`/topics/${params.topic}/topic_not_found`)
+    );
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
