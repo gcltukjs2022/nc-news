@@ -4,20 +4,27 @@ const newsApi = axios.create({
   baseURL: "https://nc-news-solo-project.herokuapp.com/api",
 });
 
-export const getArticles = () => {
-  return newsApi.get("/articles").then((res) => {
-    return res.data;
-  });
+export const getArticles = (queries) => {
+  for (const key of Object.keys(queries)) {
+    if (queries[key] === "") {
+      delete queries[key];
+    }
+  }
+  return newsApi
+    .get("/articles", {
+      params: {
+        topic: queries.topic,
+        sort_by: queries.query,
+        order: queries.order,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
 };
 
 export const getTopics = () => {
   return newsApi.get("/topics").then((res) => {
-    return res.data;
-  });
-};
-
-export const getTopicBySlug = (topic) => {
-  return newsApi.get(`/articles?topic=${topic}`).then((res) => {
     return res.data;
   });
 };
