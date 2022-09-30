@@ -1,4 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
 .App {
+  font-family: "Poppins", sans-serif;
   text-align: center;
   padding: 0 5% 0 5%;
 }
@@ -96,4 +99,20 @@ ul {
   box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
   -webkit-box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
   -moz-box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+}
+
+.container--users {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1%;
+  align-items: flex-end;
+}
+
+.users--card {
+  padding: 5%;
+}
+
+.loggedin-user {
+  color: #0d15f5;
+  font-size: larger;
 }

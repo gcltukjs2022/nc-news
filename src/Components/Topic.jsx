@@ -47,11 +47,13 @@ export default function Topic() {
   return (
     <div className="cards">
       <h2>{params.topic}</h2>
+      <br />
       <QueriesDropdown
         queries={queries}
         setQueries={setQueries}
         setSearchParams={setSearchParams}
       />
+      <br />
       {topicArticles.map((article) => {
         return (
           <div key={article.article_id} className="card">

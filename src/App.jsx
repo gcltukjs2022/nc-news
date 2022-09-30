@@ -12,6 +12,7 @@ import SingleArticle from "./Components/SingleArticle";
 import NonExistentPath from "./Components/NonExistentArticle";
 import NonExistentArticle from "./Components/NonExistentArticle";
 import NonExistentTopic from "./Components/NonExistentTopic";
+import AllUsers from "./Components/AllUsers";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/topics" element={<Topics />}></Route>
           <Route path="/topics/:topic" element={<Topic />}></Route>
           <Route path="/articles/:id" element={<SingleArticle />}></Route>
+          <Route path="/users" element={<AllUsers />}></Route>
           <Route
             path="/articles/:nonexistentid/article_not_found"
             element={<NonExistentArticle />}

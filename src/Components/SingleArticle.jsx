@@ -19,6 +19,8 @@ export default function SingleArticle() {
           setUser(user);
           setIsLoading(false);
         });
+        const time = article.created_at.slice(0, 16).replace("T", " ");
+        article.created_at = time;
       })
       .catch((err) => navigate(`/articles/${params.id}/article_not_found`));
   }, [params.id]);
