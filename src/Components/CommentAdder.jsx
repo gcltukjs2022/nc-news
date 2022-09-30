@@ -34,6 +34,7 @@ export default function CommentAdder({ article_id, setComments }) {
           onChange={handleChange}
           required
         ></textarea>
+        <br />
         <button>Submit</button>
       </form>
     </div>

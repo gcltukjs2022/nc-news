@@ -12,7 +12,7 @@ export default function Users({ author }) {
 
   return (
     <div>
-      <img src={user.avatar_url} alt={user.username} width={30} />
+      <img src={user.avatar_url} alt={user.username} width={40} />
     </div>
   );
 }

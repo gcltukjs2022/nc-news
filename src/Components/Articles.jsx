@@ -14,7 +14,12 @@ export default function Articles() {
   useEffect(() => {
     setIsLoading(true);
     getArticles(queries).then(({ articles }) => {
-      setArticles(articles);
+      const newArticles = articles.map((article) => {
+        const time = article.created_at.slice(0, 16).replace("T", " ");
+        article.created_at = time;
+        return article;
+      });
+      setArticles(newArticles);
       setIsLoading(false);
     });
   }, [queries]);
@@ -29,11 +34,13 @@ export default function Articles() {
   return (
     <div className="cards">
       <h2>All Articles</h2>
+      <br />
       <QueriesDropdown
         queries={queries}
         setQueries={setQueries}
         setSearchParams={setSearchParams}
       />
+      <br />
       {articles.map((article) => {
         return (
           <div key={article.article_id} className="card">

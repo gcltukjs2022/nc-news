@@ -13,7 +13,12 @@ export default function Comments({ article_id }) {
 
   useEffect(() => {
     getComments(article_id).then(({ comments }) => {
-      setComments(comments);
+      const newComments = comments.map((comment) => {
+        const time = comment.created_at.slice(0, 16).replace("T", " ");
+        comment.created_at = time;
+        return comment;
+      });
+      setComments(newComments);
       setIsLoading(false);
     });
   }, [comments, article_id]);

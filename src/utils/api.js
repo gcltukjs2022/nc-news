@@ -64,3 +64,9 @@ export const addComment = (article_id, reqBody) => {
 export const removeComment = (comment_id) => {
   return newsApi.delete(`/comments/${comment_id}`).then(() => {});
 };
+
+export const getUsers = () => {
+  return newsApi.get("/users").then((res) => {
+    return res.data;
+  });
+};

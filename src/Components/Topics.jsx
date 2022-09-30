@@ -22,7 +22,9 @@ export default function Topics() {
     );
 
   return (
-    <main>
+    <main className="">
+      <h2>Topics</h2>
+      <br />
       {topics.map((topic) => {
         return (
           <div key={topic.slug} className="card--topic">
