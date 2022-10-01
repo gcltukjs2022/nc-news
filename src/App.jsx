@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Articles from "./Components/Articles";
 import Header from "./Components/Header";
 import NavBar from "./Components/NavBar";
-
 import Home from "./Components/Home";
 import Topics from "./Components/Topics";
 import Topic from "./Components/Topic";

@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { UserContext } from "./User";
+import { UserContext } from "./UserProvider";
 
 export default function NavBar() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   return (
     <nav>
@@ -39,10 +42,30 @@ export default function NavBar() {
           </div>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              Signed in as: {loggedInUser.username}{" "}
-              <img src={loggedInUser.avatar_url} alt="user-avatar" width={20} />
-            </Navbar.Text>
+            {Object.keys(loggedInUser).length > 0 ? (
+              <Navbar.Text>
+                {loggedInUser.username}{" "}
+                <img
+                  src={loggedInUser.avatar_url}
+                  alt="user-avatar"
+                  width={20}
+                />{" "}
+                <a
+                  href="#"
+                  onClick={() => {
+                    setLoggedInUser({});
+                    localStorage.clear();
+                    refreshPage();
+                  }}
+                >
+                  Log out
+                </a>
+              </Navbar.Text>
+            ) : (
+              <Navbar.Text>
+                <a href="/users">Login</a>
+              </Navbar.Text>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

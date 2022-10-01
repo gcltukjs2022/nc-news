@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { Card, ListGroup, Spinner } from "react-bootstrap";
+import { Button, Card, ListGroup } from "react-bootstrap";
 import { getComments, removeComment } from "../utils/api";
 import CommentAdder from "./CommentAdder";
-import { UserContext } from "./User";
-import Users from "./Users";
+import { UserContext } from "./UserProvider";
+import UserAvatar from "./UserAvatar";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export default function Comments({ article_id }) {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   useEffect(() => {
     getComments(article_id).then(({ comments }) => {
@@ -21,77 +21,70 @@ export default function Comments({ article_id }) {
       setComments(newComments);
       setIsLoading(false);
     });
-  }, [comments, article_id]);
+  }, [comments]);
 
   const handleDeleteComment = (event, comment_id) => {
     event.preventDefault();
-    setIsAlertVisible(true);
-    setTimeout(() => {
-      setIsAlertVisible(false);
-    }, 3000);
 
-    setTimeout(() => {
-      const newCommentsList = comments.filter((comment) => {
-        return comment.comment_id !== comment_id;
-      });
-      setComments(newCommentsList);
-
-      removeComment(comment_id).catch((err) => {
-        alert("Error: Please try to delete again.");
-        setComments(comments);
-      });
-    }, 3000);
+    setComments((currComments) => [...currComments]);
+    removeComment(comment_id).catch((err) => {
+      alert("Error: Please try to delete again.");
+      setComments(comments);
+    });
   };
 
   if (isLoading)
     return (
-      <Spinner animation="border" role="status">
+      <div className="spinner-border" role="status">
         <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      </div>
     );
 
   return (
     <>
       <CommentAdder article_id={article_id} setComments={setComments} />
       <div>
-        {comments.map((comment) => {
-          return (
-            <Card key={comment.comment_id} className="card--comments">
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <Users author={comment.author} />
-                  {comment.author}
-                  <br />
-                  {comment.created_at}
-                </ListGroup.Item>
-                <ListGroup.Item>votes:{comment.votes}</ListGroup.Item>
-                <ListGroup.Item>{comment.body}</ListGroup.Item>
-
-                {comment.author === loggedInUser.username ? (
-                  <ListGroup.Item>
-                    {isAlertVisible && (
-                      <div className="alert-container">
-                        <div className="alert-inner">
-                          You have deleted this comment
-                        </div>
-                      </div>
-                    )}
-                    <button
-                      className="button--delete comment"
-                      onClick={(event) =>
-                        handleDeleteComment(event, comment.comment_id)
-                      }
-                    >
-                      Delete
-                    </button>
-                  </ListGroup.Item>
-                ) : (
-                  ""
-                )}
-              </ListGroup>
-            </Card>
-          );
-        })}
+        <TransitionGroup component="ul">
+          {comments.map((comment) => {
+            return (
+              <CSSTransition
+                key={comment.comment_id}
+                timeout={700}
+                classNames="item"
+              >
+                <li>
+                  <Card key={comment.comment_id} className="card--comments">
+                    <ListGroup variant="flush">
+                      <ListGroup.Item>
+                        <UserAvatar author={comment.author} />
+                        {comment.author}
+                        <br />
+                        {comment.created_at}
+                      </ListGroup.Item>
+                      <ListGroup.Item>votes:{comment.votes}</ListGroup.Item>
+                      <ListGroup.Item>{comment.body}</ListGroup.Item>
+                      {comment.author === loggedInUser.username ? (
+                        <ListGroup.Item>
+                          <Button
+                            variant="outline-primary"
+                            className="button--delete comment"
+                            onClick={(event) =>
+                              handleDeleteComment(event, comment.comment_id)
+                            }
+                          >
+                            <ion-icon name="trash-outline"></ion-icon>
+                          </Button>
+                        </ListGroup.Item>
+                      ) : (
+                        ""
+                      )}
+                    </ListGroup>
+                  </Card>
+                </li>
+              </CSSTransition>
+            );
+          })}
+        </TransitionGroup>
       </div>
     </>
   );

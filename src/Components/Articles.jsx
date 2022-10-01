@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getArticles } from "../utils/api";
 import Button from "react-bootstrap/Button";
 import { Link, useSearchParams } from "react-router-dom";
-import Spinner from "react-bootstrap/Spinner";
 import QueriesDropdown from "./QueriesDropdown";
 
 export default function Articles() {
@@ -26,9 +25,9 @@ export default function Articles() {
 
   if (isLoading)
     return (
-      <Spinner animation="border" role="status">
+      <div className="spinner-border" role="status">
         <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      </div>
     );
 
   return (

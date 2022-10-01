@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getTopics } from "../utils/api";
 
@@ -16,9 +16,9 @@ export default function Topics() {
 
   if (isLoading)
     return (
-      <Spinner animation="border" role="status">
+      <div className="spinner-border" role="status">
         <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      </div>
     );
 
   return (
