@@ -32,13 +32,11 @@ export default function SingleArticle() {
     const reqBody = {
       inc_votes: 1,
     };
-    updateArticle(singleArticle.article_id, reqBody)
-      .then(() => {})
-      .catch((err) => {
-        setSingleArticle((currArticle) => {
-          return { ...currArticle, votes: currArticle.votes - 1 };
-        });
+    updateArticle(singleArticle.article_id, reqBody).catch((err) => {
+      setSingleArticle((currArticle) => {
+        return { ...currArticle, votes: currArticle.votes - 1 };
       });
+    });
   };
 
   const downVotesArticle = () => {
@@ -48,13 +46,11 @@ export default function SingleArticle() {
     const reqBody = {
       inc_votes: -1,
     };
-    updateArticle(singleArticle.article_id, reqBody)
-      .then(() => {})
-      .catch((err) => {
-        setSingleArticle((currArticle) => {
-          return { ...currArticle, votes: currArticle.votes + 1 };
-        });
+    updateArticle(singleArticle.article_id, reqBody).catch((err) => {
+      setSingleArticle((currArticle) => {
+        return { ...currArticle, votes: currArticle.votes + 1 };
       });
+    });
   };
 
   if (isLoading)

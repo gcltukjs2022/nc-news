@@ -71,6 +71,7 @@ nav {
 
 ul {
   list-style-type: none;
+  text-align: center;
 }
 
 .single--article {
@@ -115,4 +116,18 @@ ul {
 .loggedin-user {
   color: #0d15f5;
   font-size: larger;
+}
+
+.form--comment {
+  margin-bottom: 3%;
+}
+
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 50ms ease-out;
+}
+
+.item-enter {
+  opacity: 0;
+  transition: opacity 50ms ease-in;
 }

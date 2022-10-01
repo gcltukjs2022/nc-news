@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { getUsers } from "../utils/api";
-import { UserContext } from "./User";
+import { UserContext } from "./UserProvider";
 
 export default function AllUsers() {
   const [allUsers, setAllUsers] = useState([]);
@@ -11,6 +11,21 @@ export default function AllUsers() {
       setAllUsers(users);
     });
   }, [allUsers]);
+
+  useEffect(() => {
+    const storage = localStorage.getItem("loggedInUser");
+    if (storage) {
+      setLoggedInUser(JSON.parse(storage));
+    }
+  }, []);
+
+  useEffect(() => {});
+
+  const handleLogin = (event, user) => {
+    event.preventDefault();
+    window.localStorage.setItem("loggedInUser", JSON.stringify(user));
+    setLoggedInUser(user);
+  };
 
   return (
     <div className="users">
@@ -38,6 +53,9 @@ export default function AllUsers() {
                 ) : (
                   <p> </p>
                 )}
+                <button onClick={(event) => handleLogin(event, user)}>
+                  Login
+                </button>
               </div>
             </div>
           );
